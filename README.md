@@ -23,3 +23,5 @@ uvicorn app.main:app --reload
 {
 "client_step2": "Y2xpZW50X3N0ZXAyX2RhdGE="
 }
+
+pytest
