@@ -1,10 +1,12 @@
 fastapi
 uvicorn
-cryptography
-
-python-dotenv
 pydantic
 
-httpx
-pytest
-pytest-asyncio
+#cryptography
+
+#python-dotenv
+
+
+#httpx
+#pytest
+#pytest-asyncio
