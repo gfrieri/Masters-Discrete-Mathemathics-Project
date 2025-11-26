@@ -60,7 +60,7 @@ def test_pake_full_flow_success():
     complete_response = response_complete.json()
     
     # Verifica que el resultado final contenga la clave de sesión y la prueba del servidor
-    # Estos valores son placeholders en crypto_placeholder.py
+    # Estos valores son placeholders en owl.py
     assert complete_response["session_key_derived"] == "Placeholder_Clave_de_Sesion_Derivada_K"
     assert complete_response["server_proof"] == "Placeholder_Prueba_Servidor_M2"
     assert complete_response["message"] == "Intercambio de claves completado exitosamente."
