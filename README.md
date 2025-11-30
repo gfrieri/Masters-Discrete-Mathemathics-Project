@@ -115,10 +115,10 @@ pytest
 
 #### 5. Pruebas Criptográficas Unitarias
 
-El archivo crypto_tests.py está diseñado para probar las funciones de bajo nivel dentro de owl.py en un entorno aislado, asegurando que los componentes criptográficos se comporten según lo esperado.
+El archivo owl_tests.py está diseñado para probar las funciones de bajo nivel dentro de owl.py en un entorno aislado, asegurando que los componentes criptográficos se comporten según lo esperado.
 
 ##### Ejecutar las pruebas unitarias de la lógica criptográfica
 
 ```
-python crypto_tests.py
+python owl_test.py
 ```
