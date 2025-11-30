@@ -25,7 +25,7 @@ python -m venv venv
 ##### En Windows:
 
 ```
- sorce venv/scripts/activate
+source venv/scripts/activate
 ```
 
 ##### En Linux o macOS:
@@ -49,7 +49,7 @@ Para levantar el servidor web de FastAPI:
 ### 3.1 Ejecutar el servidor Uvicorn con recarga automática para desarrollo
 
 ```
-uvicorn main:app --reload
+uvicorn main:app
 ```
 
 Una vez en ejecución, el servidor estará disponible en http://127.0.0.1:8000.

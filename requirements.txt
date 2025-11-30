@@ -3,7 +3,7 @@ uvicorn
 pydantic
 httpx
 pytest
+cryptography
 
-#cryptography
 #python-dotenv
 #pytest-asyncio
