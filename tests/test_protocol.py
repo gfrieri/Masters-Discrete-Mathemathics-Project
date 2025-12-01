@@ -1,8 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app
-from owl_protocol.owl import SERVER_DB, ACTIVE_PAKE_SESSIONS
-import json
+from owl_protocol.owl import SERVER_DB, ACTIVE_PAKE_SESSIONS, _simulate_ecc_point_operation
 
 # Inicializa el cliente de pruebas de FastAPI
 client = TestClient(app)
@@ -51,18 +50,21 @@ def test_pake_full_flow_success():
     assert ACTIVE_PAKE_SESSIONS[session_id]["username"] == username
     
     # --- PASO 2: Completar PAKE (/pake/complete/{session_id}) ---
-    complete_data = {
-        "client_proof": "Q2xpZW50UHJvb2Zfc3RlcDI="
-    }
+    public_element = start_data["client_public_element"]
+    client_proof = _simulate_ecc_point_operation(f"proof:{public_element}")
+
+    complete_data = { "client_proof": client_proof }
     response_complete = client.post(f"/pake/complete/{session_id}", json=complete_data)
     
     assert response_complete.status_code == 200
     complete_response = response_complete.json()
     
     # Verifica que el resultado final contenga la clave de sesión y la prueba del servidor
-    # Estos valores son placeholders en owl.py
-    assert complete_response["session_key_derived"] == "Placeholder_Clave_de_Sesion_Derivada_K"
-    assert complete_response["server_proof"] == "Placeholder_Prueba_Servidor_M2"
+    assert "session_key_derived" in complete_response
+    assert len(complete_response["session_key_derived"]) == 64
+
+    assert "server_proof" in complete_response
+    assert len(complete_response["server_proof"]) == 64
     assert complete_response["message"] == "Intercambio de claves completado exitosamente."
     
     # Verifica que la sesión activa fue eliminada
@@ -85,9 +87,11 @@ def test_pake_start_user_not_found_failure():
 
 def test_pake_complete_session_not_found_failure():
     """Prueba de fallo si el ID de sesión no existe al completar PAKE."""
-    complete_data = {
-        "client_proof": "Q2xpZW50UHJvb2Zfc3RlcDI="
-    }
+    public_element = "Q2xpZW50UHVibGljRWxlbWVudA=="
+    client_proof = _simulate_ecc_point_operation(f"proof:{public_element}")
+
+    complete_data = { "client_proof": client_proof }
+    
     # Usar un ID de sesión que nunca fue iniciado
     invalid_session_id = "non-existent-session-id-123"
     response = client.post(f"/pake/complete/{invalid_session_id}", json=complete_data)
