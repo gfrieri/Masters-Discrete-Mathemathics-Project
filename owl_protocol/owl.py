@@ -45,8 +45,7 @@ def _simulate_schnorr_verification(proof: str, public_element: str) -> bool:
     """
     # En la realidad: Verificar si V' == g^r * X^h
     expected_proof = _simulate_ecc_point_operation(f"proof:{public_element}")
-    # Placeholder simple: la prueba pasa si no está vacía y es diferente a un valor de error
-    return bool(proof) and proof != "ERROR"
+    return proof == expected_proof
 
 
 # --- Funciones de Implementación OWL ---
@@ -168,7 +167,9 @@ def pake_step2_complete(session_id: str, client_proof: str) -> Optional[Dict[str
     
     if not is_proof_valid:
         # La autenticación del cliente falló
-        return None 
+        del ACTIVE_PAKE_SESSIONS[session_id]
+        print(f"DEBUG: Sesión PAKE fallida y eliminada: {session_id}")
+        return None
 
     # 3. GENERACIÓN DEL server_proof (M2)
     # M2 es un ZKP sobre el conocimiento de la clave de sesión derivada
