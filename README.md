@@ -1,5 +1,8 @@
 # Servidor OWL PAKE (Password-Authenticated Key Exchange)
 
+Realizado por Giuliano Frieri y David Enriquez como proyecto final de Matemáticas Discretas, dictada por el profesor Ricardo Villanueva.
+Universidad del Norte, Maestría en Ingeniería de Sitemas.
+
 Este proyecto implementa el backend de un esquema OWL (Augmented PAKE) utilizando Python y FastAPI. El objetivo es proporcionar un servidor para el intercambio seguro de claves basado en contraseña, siguiendo la lógica del paper [Owl: An Augmented Password-Authenticated Key Exchange Scheme](https://dl.acm.org/doi/abs/10.1007/978-3-031-78679-2_12).
 
 La lógica criptográfica se encuentra simulada en `owl_protocol/owl.py`.
@@ -49,7 +52,7 @@ Para levantar el servidor web de FastAPI:
 ### 3.1 Ejecutar el servidor Uvicorn con recarga automática para desarrollo
 
 ```
-uvicorn main:app
+uvicorn app.main:app
 ```
 
 Una vez en ejecución, el servidor estará disponible en http://127.0.0.1:8000.
@@ -103,7 +106,9 @@ Reemplaza {session_id} con el ID obtenido en el paso anterior.
 
 **Respuesta:** Retorna session_key_derived y server_proof.
 
-#### 4. Pruebas Automáticas (Pytest)
+### Pruebas Automáticas
+
+#### 4. Pytest
 
 Las pruebas automatizadas verifican que los endpoints de la API y el flujo de sesión funcionen correctamente.
 
@@ -122,3 +127,12 @@ El archivo owl_tests.py está diseñado para probar las funciones de bajo nivel 
 ```
 python owl_test.py
 ```
+
+#### 6. Pruebas de Integración de Endpoints
+
+El archivo endpoint_test.ipynb contiene pruebas de integración para los endpoints de la API, simulando el flujo completo de registro e intercambio de claves.
+
+##### Ejecutar las pruebas de integración de endpoints
+
+Primero, inicia el servidor utilizando como se indicó anteriormente en el **punto 3.1**.
+Luego, abre el archivo `endpoint_test.ipynb` en Jupyter Notebook y ejecuta las celdas para simular las peticiones HTTP y verificar el flujo completo del protocolo OWL PAKE.
